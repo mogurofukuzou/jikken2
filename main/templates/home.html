@@ -1,0 +1,16 @@
+
+{% extends 'base.html'%}
+
+
+{% block content %}
+
+Hello world<br>
+Hello world2<br>
+<a href={% url 'mylogin'%}>login</a>
+<li>
+<a class='nav-link' href={% url 'register' %}>register</a>
+</li>
+
+
+{% endblock content %}
+
