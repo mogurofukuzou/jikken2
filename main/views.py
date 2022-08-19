@@ -5,6 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User, Group, Permission
 from .models import Manager
+
+from django.views.decorators.csrf import requires_csrf_token
+from django.http import HttpResponseServerError
 # Create your views here.
 
 
@@ -44,7 +47,17 @@ def register(request):
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        user = User.objects.create_user(username=uname, email=email, password=password1)
+
+        
+        user = User.objects.create_user(name,email,password1)
+        #user.save()
+        #b = Manager(name=name, username=uname, email=email)
+        #b.save()
+        print("save")
+
+        return render(request,'login2.html')
+
+        
     return render(request, 'register.html')
 def myregister(request):
 
@@ -110,7 +123,8 @@ def myregister(request):
             """
             
             user = User.objects.create_user(username=uname, email=email, password=password1)
-            #b = Manager(name=name, utxt=uname, email=email)
+            user.save()
+            #b = Manager(name=name, username=uname, email=email)
             #b.save()
 
     return render(request, 'login2.html')
@@ -142,3 +156,25 @@ def form_login(request):
     else:
         form = UserCreationForm()
     return render(request, 'form_login.html', {'form': form})
+
+
+
+@requires_csrf_token
+def my_customized_server_error(request, template_name='500.html'):
+    import sys
+    from django.views import debug
+    error_html = debug.technical_500_response(request, *sys.exc_info()).content
+    return HttpResponseServerError(error_html)
+
+
+
+
+
+
+
+
+
+
+
+
+

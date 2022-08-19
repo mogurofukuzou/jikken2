@@ -15,3 +15,6 @@ urlpatterns = [
     path('register',views.register, name='register'),
     path('panel',views.panel,name='panel')
 ]
+
+
+handler500 = views.my_customized_server_error
