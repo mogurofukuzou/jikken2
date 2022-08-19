@@ -40,6 +40,8 @@ def mylogin(request):
 
     return render(request, 'login2.html')
 
+
+
 def register(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -134,7 +136,8 @@ def myregister(request):
 def panel(request):
     if not request.user.is_authenticated:
         return(redirect('mylogin'))
-    return render(request,'back/home.html')
+    dic = {"username":request.user.username}
+    return render(request,'back/home.html',dic)
 
 
 
